@@ -1,0 +1,5 @@
+#!/bin/bash
+update-desktop-database /usr/share/applications/
+gtk-update-icon-cache /usr/share/icons/hicolor/ 2>/dev/null || true
+echo "✅ Xoolal Browser installé avec succès !"
+echo "🌐 Lance Xoolal depuis le menu Applications ou tape : xoolal"

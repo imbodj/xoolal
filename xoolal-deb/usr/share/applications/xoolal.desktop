@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Xoolal Browser
+Name[fr]=Xoolal Browser
+Comment=Navigateur sénégalais sécurisé
+Comment[fr]=Navigateur sénégalais sécurisé
+Exec=/usr/local/bin/xoolal/xoolal.sh
+Icon=xoolal
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;
+StartupNotify=true
+StartupWMClass=Xoolal
