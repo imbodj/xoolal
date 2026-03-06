@@ -1,0 +1,63 @@
+name: Build Xoolal Windows et Mac
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: |
+          pip install PyQt5==5.15.9
+          pip install PyQtWebEngine==5.15.6
+          pip install pyinstaller
+      - name: Build
+        run: |
+          pyinstaller --onefile --windowed `
+            --name=Xoolal_Windows `
+            --add-data="accueil.html;." `
+            --add-data="xoolal_icon.png;." `
+            --hidden-import=bloqueur `
+            --hidden-import=moteur `
+            --hidden-import=cookies `
+            navigateur.py
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: Xoolal-Windows
+          path: dist/Xoolal_Windows.exe
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: |
+          pip install PyQt5==5.15.9
+          pip install PyQtWebEngine==5.15.6
+          pip install pyinstaller
+      - name: Build
+        run: |
+          pyinstaller --onefile --windowed \
+            --name=Xoolal_Mac \
+            --add-data="accueil.html:." \
+            --add-data="xoolal_icon.png:." \
+            --hidden-import=bloqueur \
+            --hidden-import=moteur \
+            --hidden-import=cookies \
+            navigateur.py
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: Xoolal-Mac
+          path: dist/Xoolal_Mac
