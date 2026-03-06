@@ -1,83 +1,27 @@
-name: Build Xoolal pour toutes les plateformes
+name: Build Xoolal Linux
 on:
   push:
     branches: ["main"]
-
 jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
       - name: Install dependencies
         run: |
-          pip install pyinstaller
-          pip install PyQt5 PyQtWebEngine
-      - name: Build Linux
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-pyqt5 python3-pyqt5.qtwebengine
+          pip install pyinstaller --break-system-packages
+      - name: Build
         run: |
-          pyinstaller --onefile --windowed --name=Xoolal_linux \
+          pyinstaller --onefile --name=Xoolal_linux \
             --add-data="accueil.html:." \
             --hidden-import=bloqueur \
             --hidden-import=moteur \
             --hidden-import=cookies \
             navigateur.py
-      - name: Upload Linux
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: Xoolal-Linux
           path: dist/Xoolal_linux
-
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          pip install pyinstaller
-          pip install PyQt5 PyQtWebEngine
-      - name: Build Windows
-        run: |
-          pyinstaller --onefile --windowed --name=Xoolal `
-            --add-data="accueil.html;." `
-            --hidden-import=bloqueur `
-            --hidden-import=moteur `
-            --hidden-import=cookies `
-            navigateur.py
-      - name: Upload Windows
-        uses: actions/upload-artifact@v4
-        with:
-          name: Xoolal-Windows
-          path: dist/Xoolal.exe
-
-  build-mac:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          pip install pyinstaller
-          pip install PyQt5 PyQtWebEngine
-      - name: Build Mac
-        run: |
-          pyinstaller --onefile --windowed --name=Xoolal_mac \
-            --add-data="accueil.html:." \
-            --hidden-import=bloqueur \
-            --hidden-import=moteur \
-            --hidden-import=cookies \
-            navigateur.py
-      - name: Upload Mac
-        uses: actions/upload-artifact@v4
-        with:
-          name: Xoolal-Mac
-          path: dist/Xoolal_mac
