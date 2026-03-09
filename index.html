@@ -1,20 +1,325 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Xoolal Browser</title>
-<style>
-body{background:#1a1a1a;color:white;font-family:Arial;text-align:center;padding:50px}
-h1{font-size:70px}
-p{font-size:20px;color:#aaa;margin:20px 0}
-a{background:#00853F;color:white;padding:15px 40px;border-radius:30px;text-decoration:none;font-size:18px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xoolal Browser 🇸🇳</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+        body { background:#1a1a1a; color:white; font-family:Arial; }
+
+        /* NAVBAR */
+        nav {
+            position:fixed; top:0; width:100%; z-index:100;
+            background:rgba(0,0,0,0.9);
+            border-bottom:2px solid #00853F;
+            display:flex; justify-content:space-between;
+            align-items:center; padding:10px 30px;
+        }
+        .nav-logo { font-size:24px; font-weight:bold; }
+        .nav-logo span:nth-child(1) { color:#00853F; }
+        .nav-logo span:nth-child(2) { color:#FDEF42; }
+        .nav-logo span:nth-child(3) { color:#E31B23; }
+        .nav-links a {
+            color:white; text-decoration:none;
+            margin-left:20px; font-size:14px;
+            transition:color 0.3s;
+        }
+        .nav-links a:hover { color:#00853F; }
+
+        /* HERO */
+        .hero {
+            min-height:100vh;
+            background:linear-gradient(135deg, #00853F 0%, #1a1a1a 50%, #E31B23 100%);
+            display:flex; flex-direction:column;
+            justify-content:center; align-items:center;
+            text-align:center; padding:100px 20px 60px;
+        }
+        .hero-logo {
+            font-size:100px; font-weight:900;
+            letter-spacing:10px; margin-bottom:20px;
+        }
+        .hero-logo span:nth-child(1) { color:#00853F; text-shadow:0 0 30px #00853F; }
+        .hero-logo span:nth-child(2) { color:#FDEF42; text-shadow:0 0 30px #FDEF42; }
+        .hero-logo span:nth-child(3) { color:#E31B23; text-shadow:0 0 30px #E31B23; }
+        .hero-logo span:nth-child(4) { color:#00853F; text-shadow:0 0 30px #00853F; }
+        .hero-logo span:nth-child(5) { color:#FDEF42; text-shadow:0 0 30px #FDEF42; }
+        .hero-logo span:nth-child(6) { color:#E31B23; text-shadow:0 0 30px #E31B23; }
+        .hero-tagline {
+            font-size:24px; color:#ddd; margin-bottom:10px;
+        }
+        .hero-sub {
+            font-size:16px; color:#aaa; margin-bottom:40px;
+        }
+        .hero-btns { display:flex; gap:15px; flex-wrap:wrap; justify-content:center; }
+        .btn-primary {
+            background:#00853F; color:white;
+            padding:15px 35px; border-radius:30px;
+            text-decoration:none; font-size:16px; font-weight:bold;
+            transition:all 0.3s;
+        }
+        .btn-primary:hover { background:#006830; transform:translateY(-3px); }
+        .btn-secondary {
+            background:transparent; color:white;
+            padding:15px 35px; border-radius:30px;
+            text-decoration:none; font-size:16px; font-weight:bold;
+            border:2px solid white; transition:all 0.3s;
+        }
+        .btn-secondary:hover { background:white; color:#1a1a1a; transform:translateY(-3px); }
+
+        /* STATS */
+        .stats {
+            background:#111;
+            padding:60px 20px;
+            display:flex; justify-content:center;
+            gap:40px; flex-wrap:wrap;
+        }
+        .stat {
+            text-align:center;
+            padding:30px 50px;
+            background:#2d2d2d;
+            border-radius:20px;
+            border-bottom:4px solid #00853F;
+            transition:transform 0.3s;
+        }
+        .stat:hover { transform:translateY(-5px); }
+        .stat .nombre { font-size:56px; font-weight:bold; color:#00853F; }
+        .stat .label { color:#aaa; font-size:14px; margin-top:5px; }
+
+        /* SECTIONS */
+        section { padding:80px 20px; max-width:1000px; margin:0 auto; }
+        h2 {
+            font-size:36px; color:#00853F;
+            margin-bottom:40px; text-align:center;
+            border-bottom:2px solid #00853F;
+            padding-bottom:15px;
+        }
+
+        /* FEATURES */
+        .features {
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+            gap:25px;
+        }
+        .feature {
+            background:#2d2d2d; border-radius:20px;
+            padding:30px; border-left:5px solid #00853F;
+            transition:all 0.3s;
+        }
+        .feature:hover {
+            transform:translateY(-8px);
+            border-left-color:#FDEF42;
+            box-shadow:0 10px 30px rgba(0,133,63,0.3);
+        }
+        .feature .emoji { font-size:40px; margin-bottom:15px; }
+        .feature h3 { color:#FDEF42; margin-bottom:10px; font-size:18px; }
+        .feature p { color:#aaa; font-size:14px; line-height:1.6; }
+
+        /* DOWNLOAD */
+        .download-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+            gap:20px; margin-top:20px;
+        }
+        .download-card {
+            background:#2d2d2d; border-radius:20px;
+            padding:30px; text-align:center;
+            border:2px solid transparent;
+            transition:all 0.3s; text-decoration:none; color:white;
+        }
+        .download-card:hover {
+            border-color:#00853F;
+            transform:translateY(-5px);
+            box-shadow:0 10px 30px rgba(0,133,63,0.3);
+        }
+        .download-card .icon { font-size:50px; margin-bottom:15px; }
+        .download-card h3 { color:#FDEF42; margin-bottom:8px; }
+        .download-card p { color:#aaa; font-size:13px; }
+
+        /* AUTEUR */
+        .auteur-card {
+            background:#2d2d2d; border-radius:20px;
+            padding:40px; text-align:center;
+            border:2px solid #00853F;
+            max-width:500px; margin:0 auto;
+        }
+        .auteur-avatar { font-size:80px; margin-bottom:20px; }
+        .auteur-card h3 { font-size:28px; color:#FDEF42; margin-bottom:10px; }
+        .auteur-card p { color:#aaa; line-height:1.8; }
+        .auteur-card a { color:#00853F; text-decoration:none; }
+
+        /* FOOTER */
+        footer {
+            background:#111; text-align:center;
+            padding:40px; color:#aaa;
+            border-top:2px solid #00853F;
+        }
+        footer a { color:#00853F; text-decoration:none; margin:0 10px; }
+
+        /* BADGE */
+        .badges { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px 0; }
+        .badge {
+            padding:6px 16px; border-radius:20px;
+            font-size:13px; font-weight:bold;
+        }
+        .badge-vert { background:#00853F; color:white; }
+        .badge-jaune { background:#FDEF42; color:black; }
+        .badge-rouge { background:#E31B23; color:white; }
+    </style>
 </head>
 <body>
-<h1>🇸🇳 Xoolal</h1>
-<p>Navigateur sénégalais sécurisé</p>
-<p>© 2024 Ismaïla Mbodji</p>
-<br><br>
-<a href="https://github.com/imbodj/xoolal/releases">📥 Télécharger</a>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-logo">
+        <span>X</span><span>o</span><span>o</span><span>l</span><span>a</span><span>l</span>
+    </div>
+    <div class="nav-links">
+        <a href="#features">Fonctionnalités</a>
+        <a href="#download">Télécharger</a>
+        <a href="#auteur">Auteur</a>
+        <a href="https://github.com/imbodj/xoolal">GitHub</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-logo">
+        <span>X</span><span>o</span><span>o</span><span>l</span><span>a</span><span>l</span>
+    </div>
+    <div class="hero-tagline">🇸🇳 Naviguer en sécurité, naviguer sénégalais</div>
+    <div class="hero-sub">Premier navigateur web sécurisé créé au Sénégal</div>
+    <div class="badges">
+        <span class="badge badge-vert">Version 1.4</span>
+        <span class="badge badge-jaune">Python 3</span>
+        <span class="badge badge-rouge">© 2024 Ismaïla Mbodji</span>
+    </div>
+    <div class="hero-btns">
+        <a href="#download" class="btn-primary">📥 Télécharger</a>
+        <a href="https://github.com/imbodj/xoolal" class="btn-secondary">⭐ GitHub</a>
+    </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+    <div class="stat">
+        <div class="nombre">30+</div>
+        <div class="label">Réseaux pub bloqués</div>
+    </div>
+    <div class="stat">
+        <div class="nombre">85K</div>
+        <div class="label">Domaines malveillants</div>
+    </div>
+    <div class="stat">
+        <div class="nombre">6</div>
+        <div class="label">Moteurs de recherche</div>
+    </div>
+    <div class="stat">
+        <div class="nombre">100%</div>
+        <div class="label">Sénégalais 🇸🇳</div>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+    <h2>✨ Fonctionnalités</h2>
+    <div class="features">
+        <div class="feature">
+            <div class="emoji">🚫</div>
+            <h3>Bloqueur de publicités</h3>
+            <p>Bloque automatiquement 30+ réseaux publicitaires et trackers espions en temps réel.</p>
+        </div>
+        <div class="feature">
+            <div class="emoji">🛡️</div>
+            <h3>Isolation des onglets</h3>
+            <p>Chaque onglet est totalement isolé. Connecte-toi à 2 comptes différents sur le même site !</p>
+        </div>
+        <div class="feature">
+            <div class="emoji">🍪</div>
+            <h3>Gestion des cookies</h3>
+            <p>Contrôle total sur les cookies. Bloque les espions, autorise tes sites de confiance.</p>
+        </div>
+        <div class="feature">
+            <div class="emoji">🔍</div>
+            <h3>Moteur au choix</h3>
+            <p>Google, Bing, DuckDuckGo, Qwant, Ecosia, Yahoo. Change en 1 clic !</p>
+        </div>
+        <div class="feature">
+            <div class="emoji">🕵️</div>
+            <h3>Navigation privée</h3>
+            <p>Pas d'historique, pas de cookies, pas de cache. Totalement invisible.</p>
+        </div>
+        <div class="feature">
+            <div class="emoji">👶</div>
+            <h3>Mode enfant</h3>
+            <p>Protège tes enfants avec une liste de sites éducatifs uniquement.</p>
+        </div>
+        <div class="feature">
+            <div class="emoji">🌙</div>
+            <h3>Mode sombre</h3>
+            <p>Interface sombre pour protéger tes yeux. Activable en 1 clic.</p>
+        </div>
+        <div class="feature">
+            <div class="emoji">🇸🇳</div>
+            <h3>100% Sénégalais</h3>
+            <p>Créé au Sénégal pour le Sénégal et toute l'Afrique. Thème aux couleurs nationales.</p>
+        </div>
+    </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section id="download">
+    <h2>📥 Télécharger Xoolal</h2>
+    <div class="download-grid">
+        <a href="https://github.com/imbodj/xoolal/releases" class="download-card">
+            <div class="icon">🪟</div>
+            <h3>Windows</h3>
+            <p>Xoolal_Windows.exe</p>
+        </a>
+        <a href="https://github.com/imbodj/xoolal/releases" class="download-card">
+            <div class="icon">🍎</div>
+            <h3>Mac</h3>
+            <p>Xoolal_Mac</p>
+        </a>
+        <a href="https://github.com/imbodj/xoolal/releases" class="download-card">
+            <div class="icon">🐧</div>
+            <h3>Linux</h3>
+            <p>xoolal_v1.4.zip</p>
+        </a>
+        <a href="https://github.com/imbodj/xoolal/releases" class="download-card">
+            <div class="icon">📱</div>
+            <h3>Android</h3>
+            <p>Bientôt disponible</p>
+        </a>
+    </div>
+</section>
+
+<!-- AUTEUR -->
+<section id="auteur">
+    <h2>👨‍💻 Auteur</h2>
+    <div class="auteur-card">
+        <div class="auteur-avatar">👨‍💻</div>
+        <h3>Ismaïla Mbodji</h3>
+        <p>
+            🇸🇳 Dakar, Sénégal<br><br>
+            Développeur passionné, créateur de Xoolal Browser —
+            le premier navigateur web sénégalais sécurisé.<br><br>
+            📧 <a href="mailto:ismaelaembodji@email.com">ismaelaembodji@email.com</a><br>
+            🌐 <a href="https://github.com/imbodj">github.com/imbodj</a>
+        </p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p style="font-size:24px; margin-bottom:15px;">🇸🇳 Xoolal Browser</p>
+    <p>© 2024 <strong>Ismaïla Mbodji</strong> — Tous droits réservés</p>
+    <p style="margin-top:15px;">
+        <a href="https://github.com/imbodj/xoolal">GitHub</a>
+        <a href="https://github.com/imbodj/xoolal/releases">Télécharger</a>
+        <a href="mailto:ismaelaembodji@email.com">Contact</a>
+    </p>
+</footer>
+
 </body>
 </html>
