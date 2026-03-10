@@ -33,6 +33,9 @@ jobs:
           echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" >> $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
           echo -e "\nd975f751698a77b662f1254ddbeed3901e976f5a" > $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
 
+      - name: Build APK 
+        run: |
+          yes | buildozer android debug 2>&1     
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
