@@ -124,8 +124,14 @@ jobs:
       - name: Copy icon
         run: cp xoolal_icon.png icon.png
 
+      - name: Accept Android licenses
+        run: |
+          yes | sudo $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          yes | sudo $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;34.0.0" || true
+
       - name: Build APK
         run: |
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
           buildozer android debug
 
       - name: Upload APK
